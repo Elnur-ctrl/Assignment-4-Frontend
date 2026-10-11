@@ -1,0 +1,31 @@
+body {
+    background-color: #f5f5f5;
+}
+
+section {
+    background-color: white;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.basic-form label {
+    display: block;
+    margin-top: 12px;
+}
+
+.basic-form input,
+.basic-form textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+}
+
+.basic-form button {
+    display: block;
+    margin-top: 12px;
+}
