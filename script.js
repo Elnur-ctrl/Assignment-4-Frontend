@@ -1,62 +1,119 @@
-const userProfile = {
-  name: "Student",
-  birthYear: 2000,
-  isDeveloper: true,
-  hobbies: ["Reading", "Music"]
-};
+$(document).ready(function () {
+  console.log("jQuery is ready!");
 
-const profileForm = document.getElementById("profileForm");
-const usernameInput = document.getElementById("username");
-const birthYearInput = document.getElementById("birthYear");
-const profileInfo = document.getElementById("profileInfo");
-const hobbiesList = document.getElementById("hobbiesList");
-const newHobbyInput = document.getElementById("newHobby");
+  $("h1").css("color", "#3b82f6");
+  $("#headline").text("Future Developer | Learning jQuery");
+  $(".introduction").css("font-size", "18px");
 
-function updateProfileInfo() {
-  const currentYear = new Date().getFullYear();
-  const age = currentYear - userProfile.birthYear;
+  $("#light-theme").click(function () {
+    $("body").css({
+      "background-color": "#f3f5f9",
+      "color": "#202938"
+    });
 
-  profileInfo.textContent =
-    `Name: ${userProfile.name} · Age: ${age} · Hobbies: ${userProfile.hobbies.length}`;
-
-  console.log("Age:", age);
-  console.log("Number of hobbies:", userProfile.hobbies.length);
-}
-
-function renderHobbies() {
-  hobbiesList.innerHTML = "";
-
-  userProfile.hobbies.forEach((hobby) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = hobby;
-    hobbiesList.appendChild(listItem);
+    $("a").css("color", "#2563eb");
   });
 
-  updateProfileInfo();
-}
+  $("#dark-theme").click(function () {
+    $("body").css({
+      "background-color": "#172033",
+      "color": "#f3f5f9"
+    });
 
-profileForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+    $("a").css("color", "#93c5fd");
+  });
 
-  userProfile.name = usernameInput.value.trim();
-  userProfile.birthYear = Number(birthYearInput.value);
+  $("#hide-about").click(function () {
+    $("#about-details").hide();
+  });
 
-  renderHobbies();
+  $("#show-about").click(function () {
+    $("#about-details").show();
+  });
+
+  $("#toggle-about").click(function () {
+    $("#about-details").toggle();
+  });
+
+  $("#fade-in").click(function () {
+    $(".gallery img").stop(true, true).fadeIn();
+  });
+
+  $("#fade-out").click(function () {
+    $(".gallery img").stop(true, true).fadeOut();
+  });
+
+  $("#fade-toggle").click(function () {
+    $(".gallery img").stop(true, true).fadeToggle();
+  });
+
+  $("#music-heading, #movie-heading").click(function () {
+    const panel = $(this).next(".panel");
+
+    panel.stop(true, true);
+
+    if (panel.is(":visible")) {
+      panel.slideUp();
+    } else {
+      panel.slideDown();
+    }
+  });
+
+  $("#subject-heading").click(function () {
+    $("#subject-panel").stop(true, true).slideToggle();
+  });
+
+  $("#add-skill").click(function () {
+    const skill = $("#new-skill").val().trim();
+
+    if (skill !== "") {
+      $("#skills").append($("<li>").text(skill));
+      $("#new-skill").val("");
+    }
+  });
+
+  $("#prepend-skill").click(function () {
+    const skill = $("#new-skill").val().trim();
+
+    if (skill !== "") {
+      $("#skills").prepend($("<li>").text(skill));
+      $("#new-skill").val("");
+    }
+  });
+
+  $("#remove-skill").click(function () {
+    $("#skills li").last().remove();
+  });
+
+  $("#change-link").click(function () {
+    $("#social-link").attr(
+      "href",
+      "https://github.com/Elnur-ctrl?tab=repositories"
+    );
+  });
+
+  $("#contact-form").on("submit", function (event) {
+    event.preventDefault();
+  });
+
+  $("#name, #email").on("input", function () {
+    $("#live-name").text($("#name").val());
+    $("#live-email").text($("#email").val());
+  });
+
+  let skillsVisible = false;
+
+  $("#animate-skills").click(function () {
+    skillsVisible = !skillsVisible;
+
+    $(".skill-bar").each(function () {
+      const targetWidth = skillsVisible
+        ? $(this).attr("data-width")
+        : "0%";
+
+      $(this).stop().animate({
+        width: targetWidth
+      }, 800);
+    });
+  });
 });
-
-document.getElementById("addItemButton").addEventListener("click", () => {
-  const hobby = newHobbyInput.value.trim();
-
-  if (hobby !== "") {
-    userProfile.hobbies.push(hobby);
-    newHobbyInput.value = "";
-    renderHobbies();
-  }
-});
-
-document.getElementById("removeItemButton").addEventListener("click", () => {
-  userProfile.hobbies.pop();
-  renderHobbies();
-});
-
-renderHobbies();
